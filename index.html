@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion Sinistres Auto - AXA</title>
+    <style>
+        /* Variables CSS pour les thèmes */
+        :root {
+            --bg-primary: #F6F6F9;
+            --bg-secondary: #FFFFFF;
+            --bg-tertiary: #F1F1F4;
+            --text-primary: #111111;
+            --text-secondary: #666666;
+            --accent-primary: #5A56E9;
+            --accent-secondary: #4A46D9;
+            --border-color: #E5E5E8;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --error-color: #EF4444;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark {
+            --bg-primary: #1E1E2E;
+            --bg-secondary: #2A2A3E;
+            --bg-tertiary: #363650;
+            --text-primary: #EDEDED;
+            --text-secondary: #B8B8C8;
+            --accent-primary: #7C74F9;
+            --accent-secondary: #6C64E9;
+            --border-color: #404055;
+            --success-color: #34D399;
+            --warning-color: #FBBF24;
+            --error-color: #F87171;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        /* Boutons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-secondary);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+        }
+
+        .btn-icon {
+            padding: 0.5rem;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+        }
+
+        .btn-icon:hover {
+            background: var(--bg-tertiary);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Grille */
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        /* Formulaires */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(90, 86, 233, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Status badges */
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-ok {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+        }
+
+        .status-dem {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning-color);
+        }
+
+        .status-rem {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error-color);
+        }
+
+        /* Checklist */
+        .checklist {
+            list-style: none;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .checklist-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent-primary);
+        }
+
+        /* Script téléphonique */
+        .script-section {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-primary);
+        }
+
+        .script-title {
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .script-content {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-tab {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .nav-tab.active {
+            color: var(--accent-primary);
+            border-bottom-color: var(--accent-primary);
+        }
+
+        .nav-tab:hover {
+            color: var(--text-primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header-content {
+                padding: 0 10px;
+            }
+
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dark mode toggle */
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        /* Utilitaires */
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mt-4 { margin-top: 1rem; }
+        .flex { display: flex; }
+        .justify-between { justify-content: space-between; }
+        .items-center { align-items: center; }
+        .gap-2 { gap: 0.5rem; }
+        .gap-4 { gap: 1rem; }
+    </style>
+</head>
+<body>
+     Header 
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">🚗 AXA Sinistres Auto</div>
+            <div class="header-actions">
+                <button class="btn btn-primary" onclick="showCreateForm()">
+                    ➕ Nouveau Dossier
+                </button>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Changer de thème">
+                    <span id="theme-icon">🌙</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+         Vue principale : Liste des dossiers 
+        <div id="main-view" class="fade-in">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Dossiers Sinistres</h2>
+                    <div class="flex items-center gap-2">
+                        <span id="dossier-count" class="text-secondary">0 dossier(s)</span>
+                    </div>
+                </div>
+                <div id="dossiers-list" class="grid grid-3">
+                     Les dossiers seront affichés ici 
+                </div>
+                <div id="empty-state" class="text-center" style="padding: 3rem;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">📁</div>
+                    <h3>Aucun dossier créé</h3>
+                    <p class="text-secondary mb-4">Commencez par créer votre premier dossier sinistre</p>
+                    <button class="btn btn-primary" onclick="showCreateForm()">Créer un dossier</button>
+                </div>
+            </div>
+        </div>
+
+         Vue création/modification 
+        <div id="form-view" class="hidden fade-in">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title" id="form-title">Nouveau Dossier</h2>
+                    <button class="btn btn-secondary" onclick="showMainView()">← Retour</button>
+                </div>
+                <form id="dossier-form">
+                    <div class="grid grid-2">
+                        <div class="form-group">
+                            <label class="form-label">ID Dossier</label>
+                            <input type="text" id="dossier-id" class="form-input" placeholder="Auto-généré ou saisir manuellement">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Date de création</label>
+                            <input type="date" id="date-creation" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Typologie du sinistre</label>
+                            <select id="typologie" class="form-select" required>
+                                <option value="">Sélectionner...</option>
+                                <option value="accident-responsable">Accident Responsable</option>
+                                <option value="accident-non-responsable">Accident Non Responsable</option>
+                                <option value="bris-glace">Bris de Glace</option>
+                                <option value="collision-parking">Collision Parking</option>
+                                <option value="vol">Vol</option>
+                                <option value="incendie">Incendie</option>
+                                <option value="catastrophe-naturelle">Catastrophe Naturelle</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Responsabilité</label>
+                            <select id="responsabilite" class="form-select" required>
+                                <option value="">Sélectionner...</option>
+                                <option value="0">0% (Non Responsable)</option>
+                                <option value="50">50% (Responsabilité partagée)</option>
+                                <option value="100">100% (Responsable)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Type de garage</label>
+                            <select id="garage" class="form-select" required>
+                                <option value="">Sélectionner...</option>
+                                <option value="partenaire">Garage partenaire</option>
+                                <option value="non-partenaire">Garage non partenaire</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Statut KYC</label>
+                            <select id="kyc-status" class="form-select">
+                                <option value="OK">OK</option>
+                                <option value="DEM">DEM</option>
+                                <option value="REM">REM</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes (optionnel)</label>
+                        <textarea id="notes" class="form-textarea" placeholder="Notes additionnelles..."></textarea>
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="submit" class="btn btn-primary">💾 Enregistrer</button>
+                        <button type="button" class="btn btn-secondary" onclick="showMainView()">Annuler</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+         Vue détail dossier 
+        <div id="detail-view" class="hidden fade-in">
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="showTab('script')">📞 Script Téléphonique</button>
+                <button class="nav-tab" onclick="showTab('checklist')">✅ Checklist</button>
+                <button class="nav-tab" onclick="showTab('infos')">ℹ️ Informations</button>
+            </div>
+
+             Onglet Script 
+            <div id="tab-script" class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Script Téléphonique</h2>
+                    <div class="flex gap-2">
+                        <button class="btn btn-secondary" onclick="editDossier(currentDossier.id)">✏️ Modifier</button>
+                        <button class="btn btn-secondary" onclick="showMainView()">← Retour</button>
+                    </div>
+                </div>
+                <div id="script-content">
+                     Le script sera généré ici 
+                </div>
+            </div>
+
+             Onglet Checklist 
+            <div id="tab-checklist" class="card hidden">
+                <div class="card-header">
+                    <h2 class="card-title">Checklist de Suivi</h2>
+                    <div class="flex gap-2">
+                        <button class="btn btn-secondary" onclick="editDossier(currentDossier.id)">✏️ Modifier</button>
+                        <button class="btn btn-secondary" onclick="showMainView()">← Retour</button>
+                    </div>
+                </div>
+                <ul id="checklist-content" class="checklist">
+                     La checklist sera générée ici 
+                </ul>
+            </div>
+
+             Onglet Informations 
+            <div id="tab-infos" class="card hidden">
+                <div class="card-header">
+                    <h2 class="card-title">Informations du Dossier</h2>
+                    <div class="flex gap-2">
+                        <button class="btn btn-secondary" onclick="editDossier(currentDossier.id)">✏️ Modifier</button>
+                        <button class="btn btn-secondary" onclick="deleteDossier(currentDossier.id)" style="background: var(--error-color); color: white;">🗑️ Supprimer</button>
+                        <button class="btn btn-secondary" onclick="showMainView()">← Retour</button>
+                    </div>
+                </div>
+                <div id="infos-content">
+                     Les informations seront affichées ici 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let dossiers = [];
+        let currentDossier = null;
+        let currentTab = 'script';
+
+        // Base de données embarquée
+        const TYPOLOGIES = {
+            'accident-responsable': 'Accident Responsable',
+            'accident-non-responsable': 'Accident Non Responsable',
+            'bris-glace': 'Bris de Glace',
+            'collision-parking': 'Collision Parking',
+            'vol': 'Vol',
+            'incendie': 'Incendie',
+            'catastrophe-naturelle': 'Catastrophe Naturelle'
+        };
+
+        const RESPONSABILITES = {
+            '0': '0% (Non Responsable)',
+            '50': '50% (Responsabilité partagée)',
+            '100': '100% (Responsable)'
+        };
+
+        const GARAGES = {
+            'partenaire': 'Garage partenaire',
+            'non-partenaire': 'Garage non partenaire'
+        };
+
+        // Checklist par défaut
+        const DEFAULT_CHECKLIST = [
+            { id: 'appel', text: '📞 Appel client effectué', completed: false },
+            { id: 'ar', text: '📩 AR envoyé', completed: false },
+            { id: 'documents', text: '📂 Documents renommés', completed: false },
+            { id: 'typologie', text: '🧾 Vérification typologie', completed: false },
+            { id: 'reagendage', text: '🔁 Réagendage noté', completed: false },
+            { id: 'kyc', text: '🔒 KYC complétée', completed: false },
+            { id: 'cli-adapt', text: '🧠 CLI ADAPT rempli', completed: false }
+        ];
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDossiers();
+            initTheme();
+            setDefaultDate();
+            displayDossiers();
+        });
+
+        // Gestion du thème
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark');
+                document.getElementById('theme-icon').textContent = '☀️';
+            }
+        }
+
+        function toggleTheme() {
+            const isDark = document.body.classList.toggle('dark');
+            const icon = document.getElementById('theme-icon');
+            icon.textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        // Gestion des données
+        function loadDossiers() {
+            const saved = localStorage.getItem('dossiers-sinistres');
+            dossiers = saved ? JSON.parse(saved) : [];
+        }
+
+        function saveDossiers() {
+            localStorage.setItem('dossiers-sinistres', JSON.stringify(dossiers));
+        }
+
+        function generateId() {
+            return 'SIN-' + Date.now().toString().slice(-6);
+        }
+
+        function setDefaultDate() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('date-creation').value = today;
+        }
+
+        // Navigation entre les vues
+        function showMainView() {
+            document.getElementById('main-view').classList.remove('hidden');
+            document.getElementById('form-view').classList.add('hidden');
+            document.getElementById('detail-view').classList.add('hidden');
+            displayDossiers();
+        }
+
+        function showCreateForm() {
+            document.getElementById('main-view').classList.add('hidden');
+            document.getElementById('form-view').classList.remove('hidden');
+            document.getElementById('detail-view').classList.add('hidden');
+            document.getElementById('form-title').textContent = 'Nouveau Dossier';
+            document.getElementById('dossier-form').reset();
+            setDefaultDate();
+            document.getElementById('dossier-id').value = generateId();
+        }
+
+        function showDetailView(dossierId) {
+            currentDossier = dossiers.find(d => d.id === dossierId);
+            if (!currentDossier) return;
+
+            document.getElementById('main-view').classList.add('hidden');
+            document.getElementById('form-view').classList.add('hidden');
+            document.getElementById('detail-view').classList.remove('hidden');
+            
+            showTab('script');
+            generateScript();
+            generateChecklist();
+            generateInfos();
+        }
+
+        // Gestion des onglets
+        function showTab(tabName) {
+            // Masquer tous les onglets
+            document.querySelectorAll('[id^="tab-"]').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            
+            // Désactiver tous les boutons d'onglet
+            document.querySelectorAll('.nav-tab').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Afficher l'onglet sélectionné
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            event.target.classList.add('active');
+            currentTab = tabName;
+        }
+
+        // Affichage des dossiers
+        function displayDossiers() {
+            const container = document.getElementById('dossiers-list');
+            const emptyState = document.getElementById('empty-state');
+            const countElement = document.getElementById('dossier-count');
+            
+            countElement.textContent = `${dossiers.length} dossier(s)`;
+            
+            if (dossiers.length === 0) {
+                container.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            
+            emptyState.classList.add('hidden');
+            
+            container.innerHTML = dossiers.map(dossier => `
+                <div class="card" onclick="showDetailView('${dossier.id}')" style="cursor: pointer;">
+                    <div class="flex justify-between items-center mb-2">
+                        <strong>${dossier.id}</strong>
+                        <span class="status-badge status-${dossier.kycStatus.toLowerCase()}">${dossier.kycStatus}</span>
+                    </div>
+                    <div class="text-secondary mb-2">
+                        ${TYPOLOGIES[dossier.typologie]}
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-secondary">${RESPONSABILITES[dossier.responsabilite]}</span>
+                        <span class="text-secondary">${new Date(dossier.dateCreation).toLocaleDateString('fr-FR')}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Gestion du formulaire
+        document.getElementById('dossier-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                id: document.getElementById('dossier-id').value || generateId(),
+                dateCreation: document.getElementById('date-creation').value,
+                typologie: document.getElementById('typologie').value,
+                responsabilite: document.getElementById('responsabilite').value,
+                garage: document.getElementById('garage').value,
+                kycStatus: document.getElementById('kyc-status').value,
+                notes: document.getElementById('notes').value,
+                checklist: [...DEFAULT_CHECKLIST],
+                dateModification: new Date().toISOString()
+            };
+            
+            // Vérifier si c'est une modification
+            const existingIndex = dossiers.findIndex(d => d.id === formData.id);
+            if (existingIndex !== -1) {
+                // Conserver la checklist existante
+                formData.checklist = dossiers[existingIndex].checklist;
+                dossiers[existingIndex] = formData;
+            } else {
+                dossiers.push(formData);
+            }
+            
+            saveDossiers();
+            showMainView();
+        });
+
+        // Modification d'un dossier
+        function editDossier(dossierId) {
+            const dossier = dossiers.find(d => d.id === dossierId);
+            if (!dossier) return;
+            
+            document.getElementById('main-view').classList.add('hidden');
+            document.getElementById('form-view').classList.remove('hidden');
+            document.getElementById('detail-view').classList.add('hidden');
+            document.getElementById('form-title').textContent = 'Modifier le Dossier';
+            
+            // Remplir le formulaire
+            document.getElementById('dossier-id').value = dossier.id;
+            document.getElementById('date-creation').value = dossier.dateCreation;
+            document.getElementById('typologie').value = dossier.typologie;
+            document.getElementById('responsabilite').value = dossier.responsabilite;
+            document.getElementById('garage').value = dossier.garage;
+            document.getElementById('kyc-status').value = dossier.kycStatus;
+            document.getElementById('notes').value = dossier.notes || '';
+        }
+
+        // Suppression d'un dossier
+        function deleteDossier(dossierId) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer ce dossier ?')) {
+                dossiers = dossiers.filter(d => d.id !== dossierId);
+                saveDossiers();
+                showMainView();
+            }
+        }
+
+        // Génération du script téléphonique
+        function generateScript() {
+            if (!currentDossier) return;
+            
+            const container = document.getElementById('script-content');
+            const { typologie, responsabilite, garage } = currentDossier;
+            
+            // Script de base structuré
+            let script = `
+                <div class="script-section">
+                    <div class="script-title">1. Présentation</div>
+                    <div class="script-content">
+                        "Bonjour, [Prénom agent] du Service sinistre AXA Auto à l'appareil."
+                    </div>
+                </div>
+                
+                <div class="script-section">
+                    <div class="script-title">2. Objet de l'appel</div>
+                    <div class="script-content">
+                        "Je vous appelle concernant le sinistre déclaré le ${new Date(currentDossier.dateCreation).toLocaleDateString('fr-FR')} sous la référence ${currentDossier.id}."
+                    </div>
+                </div>
+                
+                <div class="script-section">
+                    <div class="script-title">3. Vérification de disponibilité</div>
+                    <div class="script-content">
+                        "Êtes-vous disponible pour échanger quelques minutes sur votre dossier ?"
+                    </div>
+                </div>
+                
+                <div class="script-section">
+                    <div class="script-title">4. Enregistrement & Empathie</div>
+                    <div class="script-content">
+                        "Je vous informe que cet appel peut être enregistré à des fins de formation et de qualité. Je comprends que cette situation puisse être stressante pour vous, nous allons faire le maximum pour vous accompagner."
+                    </div>
+                </div>
+                
+                <div class="script-section">
+                    <div class="script-title">5. Plan d'entretien</div>
+                    <div class="script-content">
+                        "Nous allons ensemble reprendre les circonstances du sinistre, analyser la responsabilité et voir les modalités de prise en charge."
+                    </div>
+                </div>
+            `;
+            
+            // Développement spécifique selon la combinaison
+            script += generateSpecificScript(typologie, responsabilite, garage);
+            
+            script += `
+                <div class="script-section">
+                    <div class="script-title">7. Coordination</div>
+                    <div class="script-content">
+                        "Pouvez-vous me confirmer vos coordonnées actuelles (email et téléphone) ?<br>
+                        Je vais également vérifier votre profil KYC.<br>
+                        Je remplis votre CLI ADAPT pour personnaliser nos échanges.<br>
+                        Quel est votre canal de communication préféré : email ou téléphone ?"
+                    </div>
+                </div>
+                
+                <div class="script-section">
+                    <div class="script-title">8. Acquittement</div>
+                    <div class="script-content">
+                        "Avez-vous d'autres questions concernant votre dossier ?"
+                    </div>
+                </div>
+                
+                <div class="script-section">
+                    <div class="script-title">9. Prise de congé personnalisée</div>
+                    <div class="script-content">
+                        "Très bien [Prénom client], je vous remercie pour ces échanges. N'hésitez pas à me recontacter si vous avez des questions. Je vous souhaite une excellente journée [Prénom client]."
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = script;
+        }
+
+        // Génération du script spécifique selon la combinaison
+        function generateSpecificScript(typologie, responsabilite, garage) {
+            let specificScript = `
+                <div class="script-section">
+                    <div class="script-title">6. Développement spécifique - ${TYPOLOGIES[typologie]}</div>
+                    <div class="script-content">
+            `;
+            
+            // Vérification des dommages et blessés
+            specificScript += "Tout d'abord, y a-t-il d'autres dommages sur votre véhicule ou des blessés à déplorer ?<br><br>";
+            
+            // Modalités selon la responsabilité
+            if (responsabilite === '0') {
+                specificScript += `
+                    <strong>Responsabilité 0% :</strong><br>
+                    "Excellente nouvelle, vous n'êtes pas responsable de ce sinistre. Votre franchise ne sera donc pas appliquée.<br>
+                    Nous allons nous occuper de récupérer l'intégralité des frais auprès de l'assureur adverse."<br><br>
+                `;
+            } else if (responsabilite === '50') {
+                specificScript += `
+                    <strong>Responsabilité partagée 50% :</strong><br>
+                    "La responsabilité est partagée à 50/50. Votre franchise sera réduite de moitié.<br>
+                    Nous récupérerons 50% des frais auprès de l'autre assureur."<br><br>
+                `;
+            } else {
+                specificScript += `
+                    <strong>Responsabilité 100% :</strong><br>
+                    "Vous êtes malheureusement responsable de ce sinistre. Votre franchise contractuelle s'appliquera.<br>
+                    Nous prendrons en charge les réparations selon les conditions de votre contrat."<br><br>
+                `;
+            }
+            
+            // Modalités selon le garage
+            if (garage === 'partenaire') {
+                specificScript += `
+                    <strong>Garage partenaire :</strong><br>
+                    "Bonne nouvelle, vous avez choisi un garage de notre réseau partenaire. Cela vous permet de bénéficier :<br>
+                    - D'un règlement direct (pas d'avance de frais)<br>
+                    - D'une garantie pièces et main d'œuvre étendue<br>
+                    - D'un véhicule de remplacement si nécessaire<br>
+                    L'expertise aura lieu directement au garage."
+                `;
+            } else {
+                specificScript += `
+                    <strong>Garage non partenaire :</strong><br>
+                    "Vous avez choisi un garage hors réseau. Dans ce cas :<br>
+                    - Vous devrez faire l'avance des frais<br>
+                    - Nous vous rembourserons sur présentation des factures<br>
+                    - L'expertise aura lieu soit au garage, soit à votre domicile<br>
+                    Notre expert vous contactera sous 48h pour organiser le rendez-vous."
+                `;
+            }
+            
+            specificScript += `
+                    </div>
+                </div>
+            `;
+            
+            return specificScript;
+        }
+
+        // Génération de la checklist
+        function generateChecklist() {
+            if (!currentDossier) return;
+            
+            const container = document.getElementById('checklist-content');
+            const checklist = currentDossier.checklist || [...DEFAULT_CHECKLIST];
+            
+            container.innerHTML = checklist.map((item, index) => `
+                <li class="checklist-item">
+                    <input type="checkbox" ${item.completed ? 'checked' : ''} 
+                           onchange="updateChecklistItem(${index}, this.checked)">
+                    <span>${item.text}</span>
+                </li>
+            `).join('');
+        }
+
+        // Mise à jour d'un élément de checklist
+        function updateChecklistItem(index, completed) {
+            if (!currentDossier) return;
+            
+            currentDossier.checklist[index].completed = completed;
+            
+            // Mettre à jour dans le tableau principal
+            const dossierIndex = dossiers.findIndex(d => d.id === currentDossier.id);
+            if (dossierIndex !== -1) {
+                dossiers[dossierIndex] = currentDossier;
+                saveDossiers();
+            }
+        }
+
+        // Génération des informations
+        function generateInfos() {
+            if (!currentDossier) return;
+            
+            const container = document.getElementById('infos-content');
+            const completedTasks = currentDossier.checklist ? currentDossier.checklist.filter(item => item.completed).length : 0;
+            const totalTasks = currentDossier.checklist ? currentDossier.checklist.length : DEFAULT_CHECKLIST.length;
+            
+            container.innerHTML = `
+                <div class="grid grid-2">
+                    <div class="form-group">
+                        <label class="form-label">ID Dossier</label>
+                        <div class="form-input" style="background: var(--bg-tertiary);">${currentDossier.id}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date de création</label>
+                        <div class="form-input" style="background: var(--bg-tertiary);">${new Date(currentDossier.dateCreation).toLocaleDateString('fr-FR')}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Typologie</label>
+                        <div class="form-input" style="background: var(--bg-tertiary);">${TYPOLOGIES[currentDossier.typologie]}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Responsabilité</label>
+                        <div class="form-input" style="background: var(--bg-tertiary);">${RESPONSABILITES[currentDossier.responsabilite]}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Garage</label>
+                        <div class="form-input" style="background: var(--bg-tertiary);">${GARAGES[currentDossier.garage]}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Statut KYC</label>
+                        <span class="status-badge status-${currentDossier.kycStatus.toLowerCase()}">${currentDossier.kycStatus}</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Progression</label>
+                        <div class="form-input" style="background: var(--bg-tertiary);">${completedTasks}/${totalTasks} tâches complétées</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Dernière modification</label>
+                        <div class="form-input" style="background: var(--bg-tertiary);">${currentDossier.dateModification ? new Date(currentDossier.dateModification).toLocaleDateString('fr-FR') : 'N/A'}</div>
+                    </div>
+                </div>
+                ${currentDossier.notes ? `
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <div class="form-textarea" style="background: var(--bg-tertiary); min-height: auto; padding: 1rem;">${currentDossier.notes}</div>
+                    </div>
+                ` : ''}
+            `;
+        }
+    </script>
+</body>
+</html>
