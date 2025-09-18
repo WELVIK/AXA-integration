@@ -1,4 +1,4 @@
-"use client"
+
 
 import { useState } from "react"
 import { useSinistres } from "@/contexts/SinistresContext"

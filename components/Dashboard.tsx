@@ -1,4 +1,4 @@
-"use client"
+
 
 import { useSinistres } from "@/contexts/SinistresContext"
 import { useTheme } from "@/contexts/ThemeContext"

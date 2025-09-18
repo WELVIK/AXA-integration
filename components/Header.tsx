@@ -1,4 +1,4 @@
-"use client"
+
 
 import { useTheme } from "@/contexts/ThemeContext"
 import { useSinistres } from "@/contexts/SinistresContext"
@@ -37,7 +37,7 @@ export default function Header({ onNewDossier, currentView }: HeaderProps) {
                 theme === "dark" ? "text-white" : "text-[#2436B1]"
               }`}
             >
-              AXA Sinistres
+              OPTIMA
             </h1>
             <p className={`text-sm transition-colors ${theme === "dark" ? "text-white/70" : "text-[#2436B1]/70"}`}>
               Gestion professionnelle

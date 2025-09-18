@@ -52,10 +52,10 @@ export const RESPONSABILITES = {
 
 export const GARAGES = {
   garage_partenaire: "Garage partenaire",
-  garage_elexia: "Garage Elexia",
+  garage_elexia: "Garage conventionner",
   garage_non_partenaire: "Garage non partenaire",
-  gag_ia: "GAG-IA",
-  gag_bcf: "GAG-BCF",
+  gag_ia: "indemnisation direct",
+  gag_bcf: "indemnisation expertise",
 } as const
 
 export const KYC_OPTIONS = {
@@ -87,7 +87,7 @@ export const CHECKLIST_LABELS = {
   appel_client_effectue: "Appel client effectué (présentation + disponibilité)",
   objet_appel_enregistre: "Objet de l'appel indiqué (date sinistre)",
   enregistrement_ok: "Enregistrement audio / mention (si applicable)",
-  empatie: "Empathie / ton enregistré (CLI ADAPT)",
+  empatie: "Empathie / ton enregistré ",
   plan_entretien: "Circonstances + statuer responsabilité + PEC",
   dommages_blesses: "Vérification autres dommages / blessés",
   franchise_informe: "Franchise expliquée",

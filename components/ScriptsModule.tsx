@@ -1,4 +1,4 @@
-"use client"
+
 
 import { useState } from "react"
 import { useTheme } from "@/contexts/ThemeContext"
@@ -20,7 +20,7 @@ export default function ScriptsModule() {
       id: "presentation",
       title: "Présentation Standard",
       category: "Ouverture",
-      content: "Bonjour, [Prénom agent] du Service sinistre AXA Auto à l'appareil.",
+      content: "Bonjour, [Prénom agent] du Service sinistre  Auto à l'appareil.",
       usage: 95,
       rating: 4.8,
     },

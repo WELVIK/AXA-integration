@@ -1,4 +1,4 @@
-"use client"
+
 
 import { useState, useEffect } from "react"
 import Sidebar from "./Sidebar"
@@ -93,7 +93,7 @@ export default function MainApp() {
                 onEdit={() => {
                   if (typeof window !== "undefined") {
                     const dossier = selectedDossierId
-                      ? JSON.parse(localStorage.getItem("axa-dossiers-sinistres") || "[]").find(
+                      ? JSON.parse(localStorage.getItem("DEC-dossiers-sinistres") || "[]").find(
                           (d: any) => d.id === selectedDossierId,
                         )
                       : null

@@ -1,4 +1,4 @@
-"use client"
+
 
 import { useState } from "react"
 import { useTheme } from "@/contexts/ThemeContext"
@@ -45,7 +45,7 @@ const knowledgeItems: KnowledgeItem[] = [
     title: "Script de Présentation",
     category: "Scripts",
     content:
-      "Bonjour M./Mme [NOM], je suis [PRÉNOM] du Service Sinistre AXA Auto. Je vous appelle au sujet du sinistre déclaré le [DATE]. Êtes-vous disponible quelques instants ?",
+      "Bonjour M./Mme [NOM], je suis [PRÉNOM] du Service Sinistre  Auto. Je vous appelle au sujet du sinistre déclaré le [DATE]. Êtes-vous disponible quelques instants ?",
     tags: ["script", "appel", "présentation"],
     lastUpdated: "2024-01-18",
   },

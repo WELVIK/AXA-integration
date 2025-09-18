@@ -4,7 +4,7 @@ import { GeistMono } from 'geist/font/mono'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'AXA-sinistre-BY WELVIK',
+  title: 'DEC-sinistre-BY WELVIK',
   description: 'WELVIK',
   generator: 'WELVIK',
 }

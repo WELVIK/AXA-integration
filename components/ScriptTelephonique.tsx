@@ -1,4 +1,4 @@
-"use client"
+
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -21,7 +21,7 @@ export default function ScriptTelephonique({ dossier }: ScriptTelephoniqueProps)
         <div class="bg-white p-4 rounded-xl border border-primary mb-4">
           <strong class="text-primary">🎉 Responsabilité 0% :</strong><br>
           "Excellente nouvelle, vous n'êtes pas responsable de ce sinistre. Votre franchise ne sera donc pas appliquée.<br>
-          Nous allons nous occuper de récupérer l'intégralité des frais auprès de l'assureur adverse."
+          Nous allons prendre en charge toute les dommages de votre vehicule cause par le sinistre ."
         </div>
       `
     } else if (responsabilite === "50") {
@@ -36,8 +36,8 @@ export default function ScriptTelephonique({ dossier }: ScriptTelephoniqueProps)
       specificContent += `
         <div class="bg-white p-4 rounded-xl border border-error mb-4">
           <strong class="text-error">⚠️ Responsabilité 100% :</strong><br>
-          "Vous êtes malheureusement responsable de ce sinistre. Votre franchise contractuelle s'appliquera.<br>
-          Nous prendrons en charge les réparations selon les conditions de votre contrat."
+          "d'apres les ciconstance mentioner sur le constat  Vous êtes  responsable de ce sinistre. Votre franchise contractuelle s'appliquera.<br>
+          Nous prendrons en charge les réparations moin la franchise ."
         </div>
       `
     }
@@ -46,11 +46,11 @@ export default function ScriptTelephonique({ dossier }: ScriptTelephoniqueProps)
       specificContent += `
         <div class="bg-white p-4 rounded-xl border border-primary">
           <strong class="text-primary">🔧 Garage partenaire :</strong><br>
-          "Bonne nouvelle, vous avez choisi un garage de notre réseau partenaire. Cela vous permet de bénéficier :<br>
+          "Alors tant que  vous avez choisi un garage de notre réseau partenaire. Cela vous permet de bénéficier :<br>
           • D'un règlement direct (pas d'avance de frais)<br>
           • D'une garantie pièces et main d'œuvre étendue<br>
-          • D'un véhicule de remplacement si nécessaire<br>
-          L'expertise aura lieu directement au garage."
+          • D'un véhicule de remplacement <br>
+          L'expertise sera une expertise terrain c'est au garagiste de prendre les photo et les envoyer a l'expert ."
         </div>
       `
     } else {
@@ -59,9 +59,9 @@ export default function ScriptTelephonique({ dossier }: ScriptTelephoniqueProps)
           <strong class="text-primary">🏪 Garage non partenaire :</strong><br>
           "Vous avez choisi un garage hors réseau. Dans ce cas :<br>
           • Vous devrez faire l'avance des frais<br>
-          • Nous vous rembourserons sur présentation des factures<br>
-          • L'expertise aura lieu soit au garage, soit à votre domicile<br>
-          Notre expert vous contactera sous 48h pour organiser le rendez-vous."
+          • Nous vous rembourserons sur présentation des factures apres validation par l'expert <br>
+          • L'expertise aura lieu dans votre garage <br>
+          Notre expert vous contactera sous 48h pour organiser le jours du rendez-vous."
         </div>
       `
     }

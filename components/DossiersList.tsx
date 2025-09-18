@@ -1,4 +1,4 @@
-"use client"
+
 import { useSinistres } from "@/contexts/SinistresContext"
 import { type Dossier, TYPOLOGIES, RESPONSABILITES } from "@/types/sinistre"
 import { Edit, Eye, Calendar, AlertCircle, TrendingUp } from "lucide-react"

@@ -1,4 +1,4 @@
-"use client"
+
 import { useTheme } from "@/contexts/ThemeContext"
 
 interface SidebarProps {
@@ -30,8 +30,8 @@ export default function Sidebar({ currentModule, onModuleChange, collapsed, onTo
         <div className="flex items-center gap-4">
           {!collapsed && (
             <div>
-              <h2 className="text-xl font-bold text-primary">AXA Sinistres</h2>
-              <p className="text-sm text-light">Assistant V2</p>
+              <h2 className="text-xl font-bold text-primary"> OPTIMA</h2>
+              <p className="text-sm text-light">Assistant </p>
             </div>
           )}
         </div>
@@ -62,8 +62,8 @@ export default function Sidebar({ currentModule, onModuleChange, collapsed, onTo
       {!collapsed && (
         <div className="sidebar-footer">
           <div className="version-badge">
-            <span className="text-sm font-medium">Version 2.0</span>
-            <span className="text-xs text-light">Majorel Maroc</span>
+            <span className="text-sm font-medium">Version 1.2</span>
+            <span className="text-xs text-light">TEST 2025</span>
           </div>
         </div>
       )}
